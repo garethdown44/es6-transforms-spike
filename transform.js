@@ -1,4 +1,4 @@
-import { orderBy, chain } from 'lodash';
+import { orderBy } from 'lodash';
 
 export default src => (
   {
