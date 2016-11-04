@@ -8,10 +8,8 @@ export default src => (
 )
 
 const mapBins = bins => {
-  const mapped = chain(bins)
-	             .map(x => ({ key: x.BinParameter.Value, value: Number(x.BinItemCount) }))
-	             .orderBy('value', 'desc')
-	             .map(x => ({ [x.key]: x.value }));
+  const mapped = orderBy(bins, x => Number(x.BinItemCount), 'desc')
+                 .map(x => ({ [x.BinParameter.Value]: Number(x.BinItemCount)} ));
 
   return Object.assign(...mapped);
 }
