@@ -2,23 +2,24 @@ import { orderBy } from 'lodash';
 
 export default function transform(src) {
   return {
-  	bins: mapBins(src.Items.SearchBinSets.SearchBinSet.Bin),
-  	items: mapItems(src.Items.Item)
+    bins: mapBins(src.Items.SearchBinSets.SearchBinSet.Bin),
+    items: mapItems(src.Items.Item)
   }
 }
 
 function mapBins(bins) {
   const mapped = orderBy(bins, x => Number(x.BinItemCount), 'desc')
-  				 .map(x => ({ [x.BinParameter.Value]: Number(x.BinItemCount) }));
+                 .map(x => ({ [x.BinParameter.Value]: Number(x.BinItemCount) }));
+
   return Object.assign(...mapped);
 }
 
 function mapItems(items) {
   const mapped = items.map(x => ({ rank: x.SalesRank,
-  								   title: x.ItemAttributes.Title,
-  								   manufacturer: x.ItemAttributes.Manufacturer,
-  								   similar: mapSimilar(x.SimilarProducts.SimilarProduct),
-  								   images: mapImages(x) }));
+                                   title: x.ItemAttributes.Title,
+                                   manufacturer: x.ItemAttributes.Manufacturer,
+                                   similar: mapSimilar(x.SimilarProducts.SimilarProduct),
+                                   images: mapImages(x) }));
   return mapped;
 }
 
@@ -34,5 +35,5 @@ function mapImages(item) {
 }
 
 const mapImage = img => ({ url: img.URL,
-  						   height: img.Height['#'],
-  						   width: img.Width['#'] });
+                           height: img.Height['#'],
+                           width: img.Width['#'] });
